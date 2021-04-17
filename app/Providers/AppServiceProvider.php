@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Schema;
 class AppServiceProvider extends ServiceProvider
 {
     /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if(config('app.env') === 'production') {
+            \URL::forceScheme('https');
+        }
+    }
+
+    /**
      * Register any application services.
      *
      * @return void
@@ -15,18 +27,5 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        Schema::defaultStringLength(191);
-        if($this->app->environment('production')) {
-            \URL::forceScheme('https');
-                    }
     }
 }
